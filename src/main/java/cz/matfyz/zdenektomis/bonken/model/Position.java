@@ -1,4 +1,4 @@
-package com.bonken.model;
+package cz.matfyz.zdenektomis.bonken.model;
 
 public enum Position {
     NORTH("North"),
@@ -9,7 +9,7 @@ public enum Position {
     public final int order;
     public final String name;
 
-    private Position(String name) {
+    Position(String name) {
         this.order = this.ordinal();
         this.name = name;
     }

@@ -1,14 +1,18 @@
-package com.bonken.model;
+package cz.matfyz.zdenektomis.bonken.model;
 
-import com.bonken.model.minigames.Minigame;
-import com.bonken.utils.Action;
-import java.util.ArrayList;
+import cz.matfyz.zdenektomis.bonken.model.minigames.Minigame;
+import cz.matfyz.zdenektomis.bonken.utils.Action;
+
 import java.util.List;
 import java.util.Random;
 
 public class RandomPlayerBot extends Player {
 
     private final Random random = new Random();
+
+    public RandomPlayerBot(Position position) {
+        super(position);
+    }
 
     protected int getChoice(int max) {
         assert max > 0;
@@ -30,9 +34,5 @@ public class RandomPlayerBot extends Player {
     @Override
     public String getUsername() {
         return "Bot";
-    }
-
-    public RandomPlayerBot(Position position) {
-        super(position);
     }
 }

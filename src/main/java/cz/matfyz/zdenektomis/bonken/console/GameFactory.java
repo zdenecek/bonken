@@ -1,7 +1,7 @@
-package com.bonken.console;
+package cz.matfyz.zdenektomis.bonken.console;
 
-import com.bonken.model.Game;
-import com.bonken.model.Player;
+import cz.matfyz.zdenektomis.bonken.model.Game;
+import cz.matfyz.zdenektomis.bonken.model.Player;
 
 public class GameFactory {
 
@@ -10,12 +10,12 @@ public class GameFactory {
         Game game = new Game(players);
 
         game.onTrickEnded().addListener((eventData) -> {
-           // System.out.println("Trick ended");
+            // System.out.println("Trick ended");
             Printer.print(eventData.trick());
         });
 
         game.onRoundEnded().addListener(r -> {
-               // Printer.print(game.scoreBoard);
+            Printer.print(game.scoreBoard);
         });
 
         game.onRoundStarted().addListener(r -> {

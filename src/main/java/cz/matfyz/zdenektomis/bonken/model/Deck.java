@@ -1,4 +1,4 @@
-package com.bonken.model;
+package cz.matfyz.zdenektomis.bonken.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,15 +9,11 @@ import java.util.stream.Collectors;
 public class Deck extends ArrayList<Card> {
     public Deck() {
 
-       super(Arrays.stream(Card.Suit.values()).flatMap(
-               suit -> Arrays.stream(Card.Value.values()).map(
-                       value -> new Card(suit, value)
-               )
-       ).toList());
-    }
-
-    public void shuffle() {
-        Collections.shuffle(this);
+        super(Arrays.stream(Card.Suit.values()).flatMap(
+                suit -> Arrays.stream(Card.Value.values()).map(
+                        value -> new Card(suit, value)
+                )
+        ).toList());
     }
 
     public static List<CardHand> deal() {
@@ -33,6 +29,10 @@ public class Deck extends ArrayList<Card> {
             hand.sortHand();
         }
         return hands;
+    }
+
+    public void shuffle() {
+        Collections.shuffle(this);
     }
 
     @Override

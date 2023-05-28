@@ -1,4 +1,4 @@
-package com.bonken.utils;
+package cz.matfyz.zdenektomis.bonken.utils;
 
 @FunctionalInterface
 public interface Funcc<IN1, IN2, OUT> {

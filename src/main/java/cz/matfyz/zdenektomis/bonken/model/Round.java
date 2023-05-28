@@ -1,35 +1,21 @@
-package com.bonken.model;
+package cz.matfyz.zdenektomis.bonken.model;
 
-import com.bonken.model.minigames.Minigame;
-import com.bonken.utils.Event;
-import com.bonken.utils.SimpleEvent;
+import cz.matfyz.zdenektomis.bonken.model.minigames.Minigame;
+import cz.matfyz.zdenektomis.bonken.utils.Event;
+import cz.matfyz.zdenektomis.bonken.utils.SimpleEvent;
 import javafx.application.Platform;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Round {
     public final Game game;
     public final Position startingPlayer;
     public final ArrayList<Trick> tricks = new ArrayList<>();
     public final Minigame minigame;
-
-    private SimpleEvent<RoundEventData> onRoundStartedEvent = new SimpleEvent<>();
-    public Event<RoundEventData> onRoundStarted() {
-        return onRoundStartedEvent;
-    }
-    private SimpleEvent<RoundEventData> onRoundEndedEvent = new SimpleEvent<>();
-    public Event<RoundEventData> onRoundEnded() {
-        return onRoundEndedEvent;
-    }
-    private SimpleEvent<TrickEventData> onTrickStartedEvent = new SimpleEvent<>();
-    public Event<TrickEventData> onTrickStarted() {
-        return onTrickStartedEvent;
-    }
-    private SimpleEvent<TrickEventData> onTrickEndedEvent = new SimpleEvent<>();
-    public Event<TrickEventData> onTrickEnded() {
-        return onTrickEndedEvent;
-    }
+    private final SimpleEvent<RoundEventData> onRoundStartedEvent = new SimpleEvent<>();
+    private final SimpleEvent<RoundEventData> onRoundEndedEvent = new SimpleEvent<>();
+    private final SimpleEvent<TrickEventData> onTrickStartedEvent = new SimpleEvent<>();
+    private final SimpleEvent<TrickEventData> onTrickEndedEvent = new SimpleEvent<>();
 
     public Round(Game game, Minigame minigame, Position startingPlayer) {
         this.game = game;
@@ -37,6 +23,25 @@ public class Round {
         this.startingPlayer = startingPlayer;
     }
 
+    public Trick currentTrick() {
+        return tricks.get(tricks.size() - 1);
+    }
+
+    public Event<RoundEventData> onRoundStarted() {
+        return onRoundStartedEvent;
+    }
+
+    public Event<RoundEventData> onRoundEnded() {
+        return onRoundEndedEvent;
+    }
+
+    public Event<TrickEventData> onTrickStarted() {
+        return onTrickStartedEvent;
+    }
+
+    public Event<TrickEventData> onTrickEnded() {
+        return onTrickEndedEvent;
+    }
 
     public Card.Suit getTrumps() {
         return minigame.getTrumps();
@@ -57,7 +62,7 @@ public class Round {
 
     private void endTrick() {
         Platform.runLater(() -> onTrickEndedEvent.fire(new TrickEventData(tricks.get(tricks.size() - 1))));
-        if(tricks.size() == Game.NUM_CARDS_IN_HAND) {
+        if (tricks.size() == Game.NUM_CARDS_IN_HAND) {
             Platform.runLater(() -> end());
         } else {
             Position nextToPlay = tricks.get(tricks.size() - 1).getWinner();
@@ -70,4 +75,7 @@ public class Round {
     }
 
 
+    public Trick lastFinishedTrick() {
+        return tricks.stream().filter(trick -> trick.isFinished()).reduce((a, b) -> b).orElse(null);
+    }
 }

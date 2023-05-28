@@ -1,4 +1,4 @@
-package com.bonken.model;
+package cz.matfyz.zdenektomis.bonken.model;
 
 public class DeterministicRandomPlayerBot extends RandomPlayerBot {
     public DeterministicRandomPlayerBot(Position position) {

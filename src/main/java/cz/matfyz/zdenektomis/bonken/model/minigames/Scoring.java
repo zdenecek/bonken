@@ -1,10 +1,10 @@
-package com.bonken.model.minigames;
+package cz.matfyz.zdenektomis.bonken.model.minigames;
 
-import com.bonken.model.Card;
-import com.bonken.model.Round;
-import com.bonken.model.Trick;
-import com.bonken.utils.Func;
-import com.bonken.utils.Funcc;
+import cz.matfyz.zdenektomis.bonken.model.Card;
+import cz.matfyz.zdenektomis.bonken.model.Round;
+import cz.matfyz.zdenektomis.bonken.model.Trick;
+import cz.matfyz.zdenektomis.bonken.utils.Func;
+import cz.matfyz.zdenektomis.bonken.utils.Funcc;
 
 public class Scoring {
 

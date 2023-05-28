@@ -1,10 +1,12 @@
-package com.bonken.console;
+package cz.matfyz.zdenektomis.bonken.console;
 
-import com.bonken.model.*;
-import com.bonken.model.minigames.Minigame;
-import com.bonken.utils.Action;
+import cz.matfyz.zdenektomis.bonken.model.Card;
+import cz.matfyz.zdenektomis.bonken.model.Player;
+import cz.matfyz.zdenektomis.bonken.model.Position;
+import cz.matfyz.zdenektomis.bonken.model.Trick;
+import cz.matfyz.zdenektomis.bonken.model.minigames.Minigame;
+import cz.matfyz.zdenektomis.bonken.utils.Action;
 
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -13,10 +15,15 @@ public class ConsolePlayer extends Player {
     private final Scanner scanner = new Scanner(System.in);
     private String username;
 
-    private <T> T get ( List<T> from) {
+    public ConsolePlayer(Position position) {
+        super(position);
+        chooseUsername();
+    }
+
+    private <T> T get(List<T> from) {
         while (true) {
             try {
-                var i  = scanner.nextInt();
+                var i = scanner.nextInt();
                 return from.get(i);
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input, try again");
@@ -55,16 +62,10 @@ public class ConsolePlayer extends Player {
         return this.username;
     }
 
-    public ConsolePlayer(Position position) {
-        super(position);
-        chooseUsername();
-    }
-
     private void chooseUsername() {
         System.out.println("Choose your username");
         username = scanner.next();
     }
-
 
 
 }

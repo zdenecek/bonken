@@ -1,7 +1,7 @@
-package com.bonken.model.minigames;
+package cz.matfyz.zdenektomis.bonken.model.minigames;
 
-import com.bonken.model.Card;
-import com.bonken.model.Round;
+import cz.matfyz.zdenektomis.bonken.model.Card;
+import cz.matfyz.zdenektomis.bonken.model.Round;
 
 public class PositiveMinigame extends Minigame {
 

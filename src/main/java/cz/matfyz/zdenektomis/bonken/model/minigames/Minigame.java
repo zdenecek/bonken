@@ -1,7 +1,7 @@
-package com.bonken.model.minigames;
+package cz.matfyz.zdenektomis.bonken.model.minigames;
 
-import com.bonken.model.Card;
-import com.bonken.model.Round;
+import cz.matfyz.zdenektomis.bonken.model.Card;
+import cz.matfyz.zdenektomis.bonken.model.Round;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,13 +16,18 @@ public abstract class Minigame {
 
         all = Stream.concat(negative, positive).toList();
     }
+
     public static int indexOf(Minigame minigame) {
         return all.indexOf(minigame);
     }
+
     public static List<Minigame> all() {
         return all;
     }
+
     public abstract Card.Suit getTrumps();
+
     public abstract String getName();
+
     public abstract int[] score(Round round);
 }

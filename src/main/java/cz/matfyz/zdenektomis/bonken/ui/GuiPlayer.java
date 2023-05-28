@@ -1,62 +1,74 @@
-package com.bonken.ui;
+package cz.matfyz.zdenektomis.bonken.ui;
 
-import com.bonken.model.Position;
-import com.bonken.model.minigames.Minigame;
-import com.bonken.utils.Action;
-import com.bonken.model.Card;
-import com.bonken.model.Player;
-import com.bonken.model.Trick;
+import cz.matfyz.zdenektomis.bonken.model.Card;
+import cz.matfyz.zdenektomis.bonken.model.Player;
+import cz.matfyz.zdenektomis.bonken.model.Position;
+import cz.matfyz.zdenektomis.bonken.model.Trick;
+import cz.matfyz.zdenektomis.bonken.model.minigames.Minigame;
+import cz.matfyz.zdenektomis.bonken.utils.Action;
+import cz.matfyz.zdenektomis.bonken.utils.Event;
+import cz.matfyz.zdenektomis.bonken.utils.SimpleEvent;
+import javafx.application.Platform;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 
 public class GuiPlayer extends Player {
 
-    private Action<List<Minigame>> onMinigameRequired;
-    private Action<Minigame> onMinigameSelected;
-    private boolean miniGameRequired = false;
-    private boolean cardRequired = false;
-
     String username;
+    private final SimpleEvent<List<Minigame>> minigameRequired = new SimpleEvent<>();
+    private final SimpleEvent<CardRequiredEventData> cardRequired = new SimpleEvent<>();
+    private boolean isMinigameRequired = false;
+    private boolean isCardRequired = false;
+    private Action<Minigame> minigameSelectedCallback;
+    private Action<Card> cardPlayCallback;
 
-    public GuiPlayer(Position position, String username, Action<List<Minigame>> onMinigameRequired ) {
+    public GuiPlayer(Position position, String username) {
         super(position);
         this.username = username;
-        this.onMinigameRequired = onMinigameRequired;
+    }
 
+    public Event<List<Minigame>> minigameRequired() {
+        return minigameRequired;
+    }
+
+    public Event<CardRequiredEventData> cardRequired() {
+        return cardRequired;
+    }
+
+    @Override
+    public void requestSelectMinigame(List<Minigame> minigames, Action<Minigame> callback) {
+        isMinigameRequired = true;
+        this.minigameSelectedCallback = callback;
+        Platform.runLater(() -> minigameRequired.fire(minigames));
     }
 
     public void minigameSelected(Minigame minigame) {
 
-        if(miniGameRequired == false) return;
-        miniGameRequired = false;
-        onMinigameSelected.call(minigame);
+        if (!isMinigameRequired) return;
+        isMinigameRequired = false;
+        Platform.runLater(() -> minigameSelectedCallback.call(minigame));
     }
 
-
-    @Override
-    public void requestSelectMinigame(List<Minigame> minigames, Action<Minigame> callback) {
-        miniGameRequired = true;
-        this.onMinigameSelected = callback;
-        onMinigameRequired.call(minigames);
-    }
-
-
-    private Action<Card> cardPlayCallback;
     @Override
     protected void playCard(Trick toTrick, Action<Card> callback) {
-        cardRequired = true;
+        isCardRequired = true;
         cardPlayCallback = callback;
+        Platform.runLater(() -> cardRequired.fire(new CardRequiredEventData(toTrick, cardHand, this.getPlayableCardsAsSet(toTrick))));
     }
 
     public void cardSelected(Card card) {
-        if(cardRequired == false) return;
+        if (!isCardRequired) return;
+        isCardRequired = false;
         cardPlayCallback.call(card);
     }
-
 
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public record CardRequiredEventData(Trick trick, List<Card> cards, Set<Card> playableCards) {
     }
 }

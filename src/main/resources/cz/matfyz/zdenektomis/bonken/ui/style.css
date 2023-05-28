@@ -1,0 +1,120 @@
+.root {
+    -fx-background-color: DARKGREEN;
+    -fx-font-family: "Consolas";
+}
+
+.label {
+    -fx-text-fill: LINEN;
+    -fx-font-size: 50px;
+    -fx-effect: dropshadow(gaussian, BLACK, 2, 2, 0, 0);
+}
+
+.header-label {
+    -fx-font-size: 100px;
+    -fx-effect: dropshadow(gaussian, BLACK, 3, 3, 0, 0);
+}
+
+.name-label {
+    -fx-font-size: 200px;
+    -fx-effect: dropshadow(gaussian, BLACK, 5, 5, 0, 0);
+}
+
+.small-label {
+    -fx-font-size: 30px;
+    -fx-text-fill: #f7e7d4;
+    -fx-effect: dropshadow(gaussian, BLACK, 2, 2, 0, 0);
+}
+
+.score {
+    -fx-background-color: LINEN;
+    -fx-border-color: BLACK;
+    -fx-border-width: 2px;
+}
+
+.score .label {
+    -fx-font-size: 30px;
+    -fx-text-fill: BLACK;
+    -fx-effect: dropshadow(gaussian, BLACK, 0, 0, 0, 0);
+}
+
+.button {
+    -fx-font-size: 20px;
+    -fx-border-color: BLACK;
+    -fx-border-width: 5 5 5 5;
+    -fx-font-weight: BOLD;
+    -fx-text-fill: BLACK;
+    -fx-background-color: LINEN;
+}
+
+.button:pressed {
+    -fx-background-color: #f7e7d4;
+}
+
+.ok-button {
+    -fx-pref-width: 150px;
+    -fx-pref-height: 30px;
+    -fx-padding: 30 30 30 30;
+}
+
+.ok-button {
+    -fx-background-color: #f7e7d4;
+}
+
+.menu-button {
+    -fx-border-color: BLACK;
+    -fx-border-width: 5 5 5 5;
+    -fx-font-weight: BOLD;
+    -fx-text-fill: BLACK;
+    -fx-background-color: LINEN;
+    -fx-padding: 30 30 30 30;
+    -fx-pref-height: 28px;
+    -fx-pref-width: 250px;
+}
+
+.return-button {
+    -fx-padding: 20 20 20 20;
+    -fx-pref-height: 28px;
+    -fx-pref-width: 200px;
+}
+
+.minigame-choice-button {
+    -fx-font-weight: BOLD;
+    -fx-text-fill: BLACK;
+    -fx-padding: 5 5 10 10;
+    -fx-margin: 5 5 10 10;
+    -fx-pref-height: 30px;
+    -fx-pref-width: 200px;
+    -fx-background-color: LINEN;
+
+}
+
+.minigamechoice-button-inactive {
+    -fx-background-color: DIMGRAY;
+}
+
+
+.endgame-button {
+    -fx-border-color: BLACK;
+    -fx-border-width: 5 5 5 5;
+    -fx-font-weight: BOLD;
+    -fx-text-fill: BLACK;
+    -fx-pref-width: 150px;
+    -fx-pref-height: 30px;
+}
+
+
+.text-field {
+	-fx-accent: DIMGRAY;
+	-fx-text-fill: LINEN;
+	-fx-font-size: 30px;
+	-fx-background-color: BLACK, DARKGREEN;
+	-fx-background-insets: 0, 0 0 2 0;
+	-fx-background-radius: 0;
+	-fx-min-width: 500px;
+}
+
+.card {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-pref-width: 132px;
+    -fx-pref-height: 180px;
+}

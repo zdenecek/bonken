@@ -1,8 +1,11 @@
-package com.bonken.console;
+package cz.matfyz.zdenektomis.bonken.console;
 
-import com.bonken.model.*;
-import com.bonken.model.minigames.Minigame;
-import com.bonken.utils.Strings;
+import cz.matfyz.zdenektomis.bonken.model.Card;
+import cz.matfyz.zdenektomis.bonken.model.Game;
+import cz.matfyz.zdenektomis.bonken.model.ScoreBoard;
+import cz.matfyz.zdenektomis.bonken.model.Trick;
+import cz.matfyz.zdenektomis.bonken.model.minigames.Minigame;
+import cz.matfyz.zdenektomis.bonken.utils.Strings;
 
 import java.io.PrintStream;
 import java.util.Arrays;
@@ -33,19 +36,19 @@ public class Printer {
         out.println(_______);
         out.println(" ".repeat(maxMinigameLength) + separator + String.join(separator, names));
         out.println(_______);
-        for (int i = 0; i <  Minigame.all().size(); i++) {
+        for (int i = 0; i < Minigame.all().size(); i++) {
             StringBuilder sb = new StringBuilder();
             sb.append(Strings.padRight(minigameNames[i], maxMinigameLength));
             sb.append(separator);
             for (int j = 0; j < Game.NUM_PLAYERS; j++) {
 
-                String score = !scoreBoard.played[i] ?  "-" : Integer.toString(scoreBoard.scores[i][j]);
-                sb.append(Strings.padLeft( score , lengths[j]));
+                String score = !scoreBoard.played[i] ? "-" : Integer.toString(scoreBoard.scores[i][j]);
+                sb.append(Strings.padLeft(score, lengths[j]));
                 if (j < Game.NUM_PLAYERS - 1) {
                     sb.append(separator);
                 }
             }
-            out.println(sb.toString());
+            out.println(sb);
         }
         out.println(_______);
         var sums = scoreBoard.getSums();
@@ -53,16 +56,16 @@ public class Printer {
         sb.append(Strings.padRight("Sum", maxMinigameLength));
         for (int j = 0; j < Game.NUM_PLAYERS; j++) {
             sb.append(separator);
-            sb.append(Strings.padLeft( Integer.toString(sums[j]), lengths[j]));
+            sb.append(Strings.padLeft(Integer.toString(sums[j]), lengths[j]));
         }
-        out.println(sb.toString());
+        out.println(sb);
     }
 
     static void print(List<Card> cardHand, PrintStream out) {
         out.println(cardHand.stream().map(c -> c.toString()).collect(Collectors.joining(", ")));
     }
 
-    static void print(List<Card>  cardHand) {
+    static void print(List<Card> cardHand) {
         print(cardHand, System.out);
     }
 

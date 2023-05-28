@@ -11,12 +11,15 @@ import javafx.scene.layout.VBox;
 
 
 public class StartMenuView extends View {
-    
-    private SimpleEvent<Void> onStartClicked = new SimpleEvent<>();
-    private SimpleEvent<Void> onQuitClicked = new SimpleEvent<>();
-    private Button exitBtn, startBtn;
-    private Label mainLabel;
-    private VBox menuButtons, menu;
+
+    private final SimpleEvent<Void> onStartClicked = new SimpleEvent<>();
+    private final SimpleEvent<Void> onQuitClicked = new SimpleEvent<>();
+    private final Button exitBtn;
+    private final Button startBtn;
+    private final Label mainLabel;
+    private final VBox menuButtons;
+    private final VBox menu;
+
     public StartMenuView() {
 
         mainLabel = new Label("BONKEN");
