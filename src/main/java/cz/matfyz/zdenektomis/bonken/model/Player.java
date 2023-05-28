@@ -15,6 +15,8 @@ public abstract class Player {
     }
 
     public abstract void requestSelectMinigame(List<Minigame> minigames, Action<Minigame> callback);
+    protected abstract void playCard(Trick toTrick, Action<Card> callback);
+    public abstract String getUsername();
 
     public final void requestCard(Trick toTrick, Action<Card> callback) {
         playCard(toTrick, card -> {
@@ -35,7 +37,6 @@ public abstract class Player {
         return true;
     }
 
-    protected abstract void playCard(Trick toTrick, Action<Card> callback);
 
     public void setCardHand(CardHand cardHand) {
         this.cardHand = cardHand;
@@ -43,9 +44,6 @@ public abstract class Player {
     public CardHand getCardHand() {
         return cardHand;
     }
-
-    public abstract String getUsername();
-
     protected CardHand cardHand;
 
     protected List<Card> getPlayableCards(Trick toTrick) {

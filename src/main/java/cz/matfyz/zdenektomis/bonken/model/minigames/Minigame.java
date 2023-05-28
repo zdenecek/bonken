@@ -22,10 +22,7 @@ public abstract class Minigame {
     public static List<Minigame> all() {
         return all;
     }
-
     public abstract Card.Suit getTrumps();
-
     public abstract String getName();
-
     public abstract int[] score(Round round);
 }

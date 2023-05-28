@@ -94,5 +94,6 @@ public class Trick {
     public boolean isFinished() {
         return this.cards.size() == Game.NUM_PLAYERS;
     }
+
 }
 
