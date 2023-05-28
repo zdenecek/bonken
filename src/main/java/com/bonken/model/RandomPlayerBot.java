@@ -10,15 +10,20 @@ public class RandomPlayerBot extends Player {
 
     private final Random random = new Random();
 
+    protected int getChoice(int max) {
+        assert max > 0;
+        return random.nextInt(max);
+    }
+
     @Override
     public void requestSelectMinigame(List<Minigame> minigames, Action<Minigame> callback) {
-        callback.call(minigames.get(random.nextInt(minigames.size())));
+        callback.call(minigames.get(getChoice(minigames.size())));
     }
 
     @Override
     protected void playCard(Trick toTrick, Action<Card> callback) {
         var playableCards = getPlayableCards(toTrick);
-        var i = random.nextInt(playableCards.size());
+        var i = getChoice(playableCards.size());
         callback.call(playableCards.get(i));
     }
 

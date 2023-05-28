@@ -7,6 +7,7 @@ import com.bonken.utils.SimpleEvent;
 import javafx.application.Platform;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Game {
@@ -86,6 +87,12 @@ public class Game {
         Platform.runLater(() -> onRoundStartedEvent.fire(new RoundEventData( round)));
         Platform.runLater(() -> round.start());
     }
+    private void deal() {
+        List<CardHand> hands = Deck.deal();
+        for (int i = 0; i < Game.NUM_PLAYERS; i++) {
+            players[i].setCardHand(hands.get(i));
+        }
+    }
 
     private Round createRound(Minigame minigame) {
         var round = new Round(this, minigame, startingPlayer.next(3));
@@ -100,6 +107,8 @@ public class Game {
 
 
     public void startRound() {
+
+        deal();
 
         var minigames = this.minigames.stream().toList();
         // If player hasn't chosen a positive minigame and this is his last minigame, he has to choose one.

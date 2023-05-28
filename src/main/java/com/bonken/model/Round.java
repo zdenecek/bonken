@@ -35,14 +35,8 @@ public class Round {
         this.game = game;
         this.minigame = minigame;
         this.startingPlayer = startingPlayer;
-        deal();
     }
-    private void deal() {
-        List<CardHand> hands = Deck.deal();
-        for (int i = 0; i < Game.NUM_PLAYERS; i++) {
-            game.getPlayers()[i].setCardHand(hands.get(i));
-        }
-    }
+
 
     public Card.Suit getTrumps() {
         return minigame.getTrumps();

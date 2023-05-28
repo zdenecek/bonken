@@ -30,6 +30,7 @@ public class Deck extends ArrayList<Card> {
             var cards = deck.subList(i * Game.NUM_CARDS_IN_HAND, (i + 1) * Game.NUM_CARDS_IN_HAND);
             var hand = new CardHand(cards);
             hands.add(hand);
+            hand.sortHand();
         }
         return hands;
     }
