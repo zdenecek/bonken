@@ -5,4 +5,6 @@ module com.bonken.bonken {
 
     opens com.bonken.ui to javafx.fxml;
     exports com.bonken.ui;
+    exports com.bonken.console;
+
 }
