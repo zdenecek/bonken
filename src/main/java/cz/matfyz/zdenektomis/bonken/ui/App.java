@@ -11,9 +11,6 @@ import javafx.stage.Stage;
  */
 public class App extends Application {
 
-    private App() {
-    }
-
     /**
      * Main method.
      * @param args the command line arguments

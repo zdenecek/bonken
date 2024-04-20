@@ -146,7 +146,7 @@ public class Controller {
             players[i] = new RandomPlayerBot(Position.values()[i]);
         }
 
-        game = new Game(players);
+        game = new Game(players, Platform::runLater);
 
         stage.setScene(gameView.getScene());
         trickPane.setGame(game);

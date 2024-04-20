@@ -2,6 +2,7 @@ package cz.matfyz.zdenektomis.bonken.model;
 
 import cz.matfyz.zdenektomis.bonken.model.minigames.Minigame;
 import cz.matfyz.zdenektomis.bonken.model.minigames.PositiveMinigame;
+import cz.matfyz.zdenektomis.bonken.utils.Action;
 import cz.matfyz.zdenektomis.bonken.utils.Event;
 import cz.matfyz.zdenektomis.bonken.utils.SimpleEvent;
 import javafx.application.Platform;
@@ -16,6 +17,7 @@ import java.util.List;
 public class Game {
 
     public static final int NUM_PLAYERS = 4;
+    public static final int NUM_ROUNDS = Minigame.all().size();
     public static final int NUM_CARDS_IN_HAND = 13;
     private final boolean[] PlayerHasSelectedPositiveMinigame = new boolean[NUM_PLAYERS];
     public ArrayList<Round> rounds = new ArrayList<>();
@@ -31,9 +33,16 @@ public class Game {
     private final SimpleEvent<TrickEventData> onCardPlayedEvent = new SimpleEvent<>();
     private Position startingPlayer = Position.NORTH;
 
-    public Game(Player[] players) {
+    private Action<Runnable> executeLater;
+
+    public Game(Player[] players, Deck deck, Action<Runnable> executeLater) {
         this.players = players;
         scoreBoard = new ScoreBoard(this);
+        this.executeLater = executeLater;
+    }
+
+    public Game(Player[] players, Action<Runnable> executeLater) {
+        this(players, new Deck(), executeLater);
     }
 
     /**
@@ -111,8 +120,8 @@ public class Game {
      * Starts the game.
      */
     public void startGame() {
-        Platform.runLater(() -> onGameStartedEvent.fire(new GameEventData(this)));
-        Platform.runLater(this::startRound);
+        this.executeLater.call(() -> onGameStartedEvent.fire(new GameEventData(this)));
+        this.executeLater.call(this::startRound);
     }
 
     private void startRound() {
@@ -147,8 +156,8 @@ public class Game {
         Round round = createRound(minigame);
         rounds.add(round);
         round.onRoundEnded().addListener(data -> endRound());
-        Platform.runLater(() -> onRoundStartedEvent.fire(new RoundEventData(round)));
-        Platform.runLater(() -> round.start());
+        this.executeLater.call(() -> onRoundStartedEvent.fire(new RoundEventData(round)));
+        this.executeLater.call(() -> round.start());
     }
 
     private void deal() {
@@ -159,7 +168,7 @@ public class Game {
     }
 
     private Round createRound(Minigame minigame) {
-        var round = new Round(this, minigame, startingPlayer.next(3));
+        var round = new Round(this, minigame, startingPlayer.next(3), executeLater);
         round.onTrickEnded().addListener(data -> onTrickEndedEvent.fire(data));
         round.onTrickStarted().addListener(data -> {
             onTrickStartedEvent.fire(data);
@@ -170,9 +179,9 @@ public class Game {
     }
 
     private void endRound() {
-        Platform.runLater(() -> onRoundEndedEvent.fire(new RoundEventData(rounds.get(rounds.size() - 1))));
+        this.executeLater.call(() -> onRoundEndedEvent.fire(new RoundEventData(rounds.get(rounds.size() - 1))));
         scoreBoard.updateScoreBoard(rounds.get(rounds.size() - 1));
-        if (rounds.size() == Minigame.all().size())
+        if (rounds.size() ==  Game.NUM_ROUNDS)
             end();
         else {
             this.startingPlayer = startingPlayer.next();
@@ -181,7 +190,7 @@ public class Game {
     }
 
     private void end() {
-        Platform.runLater(() -> onGameEndedEvent.fire(new GameEventData(this)));
+        this.executeLater.call(() -> onGameEndedEvent.fire(new GameEventData(this)));
     }
 
 

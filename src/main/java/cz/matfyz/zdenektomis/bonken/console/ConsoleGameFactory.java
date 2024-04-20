@@ -2,6 +2,7 @@ package cz.matfyz.zdenektomis.bonken.console;
 
 import cz.matfyz.zdenektomis.bonken.model.Game;
 import cz.matfyz.zdenektomis.bonken.model.Player;
+import cz.matfyz.zdenektomis.bonken.utils.Action;
 
 /**
  * Factory class for creating a game for console UI version.
@@ -16,8 +17,8 @@ public class ConsoleGameFactory {
      * @param players Players to play the game.
      * @return Game instance.
      */
-    public static Game createGame(Player[] players) {
-        Game game = new Game(players);
+    public static Game createGame(Player[] players, Action<Runnable> executeLater) {
+        Game game = new Game(players, executeLater);
 
         game.onTrickEnded().addListener((eventData) -> {
             // System.out.println("Trick ended");

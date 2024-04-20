@@ -1,0 +1,76 @@
+@startuml
+
+class Card {
+  Suit suit
+  Value value
+}
+
+class CardHand
+
+CardHand -- Card
+class Deck {
+  List<CardHand> deal()
+}
+
+Deck .. CardHand : makes
+
+abstract class Game {
+
+}
+
+Game -- Deck
+
+enum Position {
+  NORTH
+  EAST
+  SOUTH
+  WEST
+
+}
+
+abstract class Player {
+
++ String getUsername()
++ void selectMinigame(List<Minigame> from, callback)
++ void playCard(Trick toTrick, callback)
+}
+
+Player -- Position
+
+Game -- "4" Player
+Player -- CardHand
+
+
+class Round {
+  + Minigame minigame
+  + Position startingPlayer
+}
+
+Game "1" -- "1..*" Round
+
+class Trick {
+  Position firstPlayer
+}
+
+Trick -- "1..4" Card
+
+Round "1" -- "1..13" Trick
+Round -- "1" Minigame
+
+abstract class Minigame {
+  Suit getTrumps()
+  String getName()
+  int[4] score(Round round)
+}
+
+class PositiveMinigame
+class NegativeMinigame
+
+PositiveMinigame --> Minigame
+NegativeMinigame --> Minigame
+
+class ScoreBoard
+
+Game -- ScoreBoard
+
+@enduml

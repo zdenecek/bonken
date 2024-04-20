@@ -1,5 +1,6 @@
 package cz.matfyz.zdenektomis.bonken.model;
 
+import cz.matfyz.zdenektomis.bonken.utils.Action;
 import cz.matfyz.zdenektomis.bonken.utils.Event;
 import cz.matfyz.zdenektomis.bonken.utils.SimpleEvent;
 import javafx.application.Platform;
@@ -19,9 +20,12 @@ public class Trick {
     private final SimpleEvent<TrickEventData> onCardPlayedEvent = new SimpleEvent<>();
     private Player currentlyRequestedPlayer;
 
-    public Trick(Round round, Position firstPlayer) {
+    private final Action<Runnable> executeLater;
+
+    public Trick(Round round, Position firstPlayer, Action<Runnable> executeLater) {
         this.round = round;
         this.firstPlayer = firstPlayer;
+        this.executeLater = executeLater;
     }
 
     public Event<TrickEventData> onTrickStarted() {
@@ -38,7 +42,7 @@ public class Trick {
 
     public void start() {
         requestCardFrom(firstPlayer);
-        Platform.runLater(() -> onTrickStartedEvent.fire(new TrickEventData(this)));
+        this.executeLater.call(() -> onTrickStartedEvent.fire(new TrickEventData(this)));
     }
 
     private void requestCardFrom(Position position) {
@@ -52,7 +56,7 @@ public class Trick {
             throw new RuntimeException("Player " + player + " tried to play a card, but it's not their turn!");
         }
 
-        Platform.runLater(() -> onCardPlayedEvent.fire(new TrickEventData(this)));
+        this.executeLater.call(() -> onCardPlayedEvent.fire(new TrickEventData(this)));
 
         cards.add(card);
 
@@ -63,7 +67,7 @@ public class Trick {
     }
 
     private void end() {
-        Platform.runLater(() -> onTrickEndedEvent.fire(new TrickEventData(this)));
+        this.executeLater.call(() -> onTrickEndedEvent.fire(new TrickEventData(this)));
         cards.get(0).suit();
     }
 

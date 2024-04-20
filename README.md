@@ -24,7 +24,6 @@ Knihovny, které bych chtěl použít, by byly hlavně následující:
 
 - JavaFx 
 - JUnit 5
-- log4j
 
 Jako build systém bych chtěl použít Maven.
 
@@ -44,6 +43,72 @@ mvn clean compile exec:java -P console
 
 ## Uživatelská dokumentace
 
+### Pravidla hry
+
+Hra Bonken je karetní hra pro 4 hráče. Cílem hry je získat co nejvíce bodů. Hra se hraje s francouzskými kartami bez žolíků.
+Hraje se třináct v každém kole hráč zvolí minihru, kterou chce hrát. 
+Jsou dva typy miniher: Pozitivní - jedna barva jsou trumfy a hráči dostanou body za každý vyhraný zdvih, a negativní: 
+Hráči dostanou záporné body za sebrání určité karty.
+
+### Ovládání
+
+1. Klikněte na tlačítko "Start"
+2. Zadejte své jméno a kliněte na tlačítko "OK"
+3. Pro každé kolo:
+   1. Vyberte minihru, kterou chcete hrát
+   2. Přidejte kartu do zdvihu kliknutím na ni
+   3. Dokončené zdvihy se zobrazí v pravém sloupci
+4. Pro zobrazení aktuálního skóre najeďte myší na nápis skóre.
+5. Číslo kola a aktuální minihra se zobrazuje v levém horním rohu.
+6. Po dohrání všech kol se zobrazí výsledné skóre.
+
 ## Vývojářská dokumentace 
 
+### Generování Javadoc
 
+Javadoc s dokumentací kódu lze vygenerovat pomocí příkazu:
+
+```sh
+mvn compile javadoc:javadoc
+```
+
+Dokumentace se vygeneruje do adresáře `target/site/apidocs/`.
+
+### Spuštění testů
+
+Testy lze spustit pomocí příkazu:
+
+```sh
+mvn test
+```
+
+Test je jeden, který testuje model hry, jestli je hra dokončitelná.
+
+### Struktura aplikace
+
+Aplikace je rozdělena do čtyř balíčků:
+
+- `cz.matfyz.zdenektomis.bonken.model` - obsahuje logiku hry
+- `cz.matfyz.zdenektomis.bonken.ui` - obsahuje implementaci hry pro grafickou verzi aplikace
+- `cz.matfyz.zdenektomis.bonken.console` - obsahuje implementaci hry pro konzolovou verzi aplikace
+- `cz.matfyz.zdenektomis.bonken.utils` - obsahuje pomocné třídy
+
+Program je založen na vzoru event-subscriber, kde třídy jako `Game`, `Round` a `Trick`, obsahují eventy, na které lze
+napojit funkcionalitu, např. GUI.
+
+Z tohoto důvodu tyto třídy berou jako parameter callable `executeLater`, která je používána pro asynchronní běh aplikace.
+V JavaFX je tato callable implementována jako `Platform.runLater`, v konzolové verzi se k tomuto účelu používá Executor.
+
+### Objektový model
+
+Následující diagram znázorňuje objektový model hry.
+
+![Model](img/model.png)
+
+Balíčky `ui` a `console` implementují třídy `Player` a `Game` z balíčku `model`.
+
+### Průběh hry
+
+Následující diagram ukazuje průběh hry v grafické verzi aplikace.
+
+![Game](img/flow.png)

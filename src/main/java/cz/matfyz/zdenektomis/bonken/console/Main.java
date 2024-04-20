@@ -9,12 +9,14 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 /**
  * Main class for the console application.
  */
-public class Main extends Application {
+public class Main {
 
 
     /**
@@ -22,14 +24,9 @@ public class Main extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        launch();
-    }
 
-    private Main() {
-    }
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-    @Override
-    public void start(Stage stage) throws IOException {
         int numPlayers = 1;
 
         Player[] players = new Player[Game.NUM_PLAYERS];
@@ -41,8 +38,12 @@ public class Main extends Application {
             }
         }
 
-        Game game = ConsoleGameFactory.createGame(players);
+        Game game = ConsoleGameFactory.createGame(players, executorService::submit);
 
-        Platform.runLater(() -> game.startGame());
+        executorService.submit( game::startGame);
     }
+
+    private Main() {
+    }
+
 }

@@ -1,6 +1,7 @@
 package cz.matfyz.zdenektomis.bonken.model;
 
 import cz.matfyz.zdenektomis.bonken.model.minigames.Minigame;
+import cz.matfyz.zdenektomis.bonken.utils.Action;
 import cz.matfyz.zdenektomis.bonken.utils.Event;
 import cz.matfyz.zdenektomis.bonken.utils.SimpleEvent;
 import javafx.application.Platform;
@@ -20,10 +21,13 @@ public class Round {
     private final SimpleEvent<TrickEventData> onTrickStartedEvent = new SimpleEvent<>();
     private final SimpleEvent<TrickEventData> onTrickEndedEvent = new SimpleEvent<>();
 
-    public Round(Game game, Minigame minigame, Position startingPlayer) {
+    private final Action<Runnable> executeLater;
+
+    public Round(Game game, Minigame minigame, Position startingPlayer, Action<Runnable> executeLater) {
         this.game = game;
         this.minigame = minigame;
         this.startingPlayer = startingPlayer;
+        this.executeLater = executeLater;
     }
 
     /**
@@ -72,7 +76,7 @@ public class Round {
      * Starts the round.
      */
     public void start() {
-        Platform.runLater(() -> onRoundStartedEvent.fire(new RoundEventData(this)));
+        this.executeLater.call(() -> onRoundStartedEvent.fire(new RoundEventData(this)));
         startTrick(startingPlayer);
     }
 
@@ -86,17 +90,17 @@ public class Round {
 
 
     private void startTrick(Position firstToPlay) {
-        Trick trick = new Trick(this, firstToPlay);
-        Platform.runLater(() -> onTrickStartedEvent.fire(new TrickEventData(trick)));
+        Trick trick = new Trick(this, firstToPlay, executeLater);
+        this.executeLater.call(() -> onTrickStartedEvent.fire(new TrickEventData(trick)));
         trick.onTrickEnded().addListener(data -> endTrick());
         tricks.add(trick);
         trick.start();
     }
 
     private void endTrick() {
-        Platform.runLater(() -> onTrickEndedEvent.fire(new TrickEventData(tricks.get(tricks.size() - 1))));
+        this.executeLater.call(() -> onTrickEndedEvent.fire(new TrickEventData(tricks.get(tricks.size() - 1))));
         if (tricks.size() == Game.NUM_CARDS_IN_HAND) {
-            Platform.runLater(() -> end());
+            this.executeLater.call(() -> end());
         } else {
             Position nextToPlay = tricks.get(tricks.size() - 1).getWinner();
             startTrick(nextToPlay);
@@ -104,7 +108,7 @@ public class Round {
     }
 
     private void end() {
-        Platform.runLater(() -> onRoundEndedEvent.fire(new RoundEventData(this)));
+        this.executeLater.call(() -> onRoundEndedEvent.fire(new RoundEventData(this)));
     }
 
 }
