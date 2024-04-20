@@ -41,6 +41,8 @@ Lze také spustit konzolovou verzi aplikace:
 mvn clean compile exec:java -P console
 ```
 
+Grafická verze má omezenou přívětivost a je určena spíše pro testování funkcionality hry.
+
 ## Uživatelská dokumentace
 
 ### Pravidla hry

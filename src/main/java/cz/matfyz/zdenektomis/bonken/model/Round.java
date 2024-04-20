@@ -23,6 +23,13 @@ public class Round {
 
     private final Action<Runnable> executeLater;
 
+    /**
+     * Creates a new round.
+     * @param game the game the round is played in
+     * @param minigame the minigame of the round
+     * @param startingPlayer the player that starts the round
+     * @param executeLater a function that executes a runnable later
+     */
     public Round(Game game, Minigame minigame, Position startingPlayer, Action<Runnable> executeLater) {
         this.game = game;
         this.minigame = minigame;
@@ -31,6 +38,7 @@ public class Round {
     }
 
     /**
+     * Get the current trick.
      * @return current trick, null if no trick has been started yet
      */
     public Trick currentTrick() {
@@ -38,6 +46,7 @@ public class Round {
     }
 
     /**
+     * Get the event that is fired when the round starts.
      * @return the event that is fired when the round starts
      */
     public Event<RoundEventData> onRoundStarted() {
@@ -45,6 +54,7 @@ public class Round {
     }
 
     /**
+     * Get the event that is fired when the round ends.
      * @return the event that is fired when the round ends
      */
     public Event<RoundEventData> onRoundEnded() {
@@ -52,6 +62,7 @@ public class Round {
     }
 
     /**
+     * Get the event that is fired when a trick starts.
      * @return the event that is fired when a trick starts
      */
     public Event<TrickEventData> onTrickStarted() {
@@ -66,6 +77,7 @@ public class Round {
     }
 
     /**
+     * Get the trumps of the round.
      * @return the trumps of the round, null if no trumps have been selected yet or the game has no trumps
      */
     public Card.Suit getTrumps() {
@@ -81,6 +93,7 @@ public class Round {
     }
 
     /**
+     * Get the last finished trick.
      * @return the last finished trick, null if no trick has been finished yet
      */
     public Trick getLastFinishedTrick() {

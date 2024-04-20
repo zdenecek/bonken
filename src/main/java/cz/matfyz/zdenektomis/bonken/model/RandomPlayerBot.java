@@ -13,6 +13,10 @@ public class RandomPlayerBot extends Player {
 
     private final Random random = new Random();
 
+    /**
+     * Creates a new bot.
+     * @param position the position of the bot at the table
+     */
     public RandomPlayerBot(Position position) {
         super(position);
     }
