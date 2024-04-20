@@ -5,6 +5,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.groupingBy;
+
 public class CardHand extends ArrayList<Card> {
     public CardHand() {
         super();
@@ -26,11 +28,5 @@ public class CardHand extends ArrayList<Card> {
         // Otherwise, return all cards
         return this;
     }
-
-    @Override
-    public String toString() {
-        return this.stream().map(c -> c.toString()).collect(Collectors.joining(", "));
-    }
-
 
 }

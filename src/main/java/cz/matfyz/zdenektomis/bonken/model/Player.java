@@ -8,25 +8,55 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Base class for players in a game of Bonken.
+ */
 public abstract class Player {
 
     private final Position position;
     protected CardHand cardHand;
 
+    /**
+     * Creates a new player.
+     * @param position the position of the player at the table
+     */
     public Player(Position position) {
         this.position = position;
     }
 
+    /**
+     * @return the position of the player, i.e. where they sit at the table
+     */
     public final Position getPosition() {
         return position;
     }
 
+
+    /**
+     * Requests the player to select a minigame from a list of minigames.
+     * @param minigames list of minigames to choose from
+     * @param callback callback to call with the selected minigame
+     */
     public abstract void requestSelectMinigame(List<Minigame> minigames, Action<Minigame> callback);
 
+    /**
+     * Requests the player to play a card to a trick.
+     * @param toTrick the trick to play a card to
+     * @param callback callback to call with the selected card
+     */
     protected abstract void playCard(Trick toTrick, Action<Card> callback);
 
+    /**
+     * Get the player's username.
+     * @return the username of the player
+     */
     public abstract String getUsername();
 
+    /**
+     * Requests the player to play a card to a trick.
+     * @param toTrick the trick to play a card to
+     * @param callback callback to call with the selected card
+     */
     public final void requestCard(Trick toTrick, Action<Card> callback) {
         playCard(toTrick, card -> {
             if (!checkFollowsSuit(card, toTrick))
@@ -50,6 +80,10 @@ public abstract class Player {
         return cardHand;
     }
 
+    /**
+     * Sets the cards of the player.
+     * @param cardHand the card hand to set
+     */
     public void setCardHand(CardHand cardHand) {
         this.cardHand = cardHand;
     }

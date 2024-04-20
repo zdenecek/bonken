@@ -11,14 +11,26 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 
+/**
+ * Main class for the console application.
+ */
 public class Main extends Application {
+
+
+    /**
+     * Launches the console application.
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
         launch();
     }
 
+    private Main() {
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
-        int numPlayers = 0;
+        int numPlayers = 1;
 
         Player[] players = new Player[Game.NUM_PLAYERS];
         for (int i = 0; i < Game.NUM_PLAYERS; i++) {
@@ -29,7 +41,7 @@ public class Main extends Application {
             }
         }
 
-        Game game = GameFactory.createGame(players);
+        Game game = ConsoleGameFactory.createGame(players);
 
         Platform.runLater(() -> game.startGame());
     }

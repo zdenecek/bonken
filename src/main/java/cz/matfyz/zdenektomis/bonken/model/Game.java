@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * Represents a game of Bonken.
+ */
 public class Game {
 
     public static final int NUM_PLAYERS = 4;
@@ -33,50 +36,107 @@ public class Game {
         scoreBoard = new ScoreBoard(this);
     }
 
+    /**
+     * @return players in the game
+     */
     public Player[] getPlayers() {
         return players;
     }
 
+    /**
+     * @param position of the player
+     * @return player at the given position
+     */
     public Player getPlayer(Position position) {
         return players[position.order];
     }
 
+    /**
+     * @return current round
+     */
     public Round currentRound() {
         return rounds.get(rounds.size() - 1);
     }
 
+    /**
+     * @return event that is fired when a round starts
+     */
     public Event<RoundEventData> onRoundStarted() {
         return onRoundStartedEvent;
     }
 
+    /**
+     * @return event that is fired when a round ends
+     */
     public Event<RoundEventData> onRoundEnded() {
         return onRoundEndedEvent;
     }
 
+    /**
+     * @return event that is fired when a game starts
+     */
     public Event<GameEventData> onGameStarted() {
         return onGameStartedEvent;
     }
 
+    /**
+     * @return event that is fired when a game ends
+     */
     public Event<GameEventData> onGameEnded() {
         return onGameEndedEvent;
     }
 
+    /**
+     * @return event that is fired when a trick starts
+     */
     public Event<TrickEventData> onTrickStarted() {
         return onTrickEndedEvent;
     }
 
+    /**
+     * @return event that is fired when a trick ends
+     */
     public Event<TrickEventData> onTrickEnded() {
         return onTrickEndedEvent;
     }
 
+    /**
+     * @return event that is fired when a card is played
+     */
     public Event<TrickEventData> onCardPlayed() {
         return onCardPlayedEvent;
     }
 
+    /**
+     * Starts the game.
+     */
     public void startGame() {
         Platform.runLater(() -> onGameStartedEvent.fire(new GameEventData(this)));
         Platform.runLater(this::startRound);
     }
+
+    private void startRound() {
+
+        deal();
+
+        var minigames = this.minigames.stream().toList();
+        // If player hasn't chosen a positive minigame and this is his last minigame, he has to choose one.
+        if (!PlayerHasSelectedPositiveMinigame[startingPlayer.order] && minigames.size() <= NUM_PLAYERS) {
+            minigames = minigames.stream().filter(
+                    minigame -> minigame.getClass() == PositiveMinigame.class
+            ).toList();
+        }
+        // If a player already chose a positive minigame, he can't choose another one.
+        else if (PlayerHasSelectedPositiveMinigame[startingPlayer.order]) {
+            minigames = minigames.stream().filter(
+                    minigame -> minigame.getClass() != PositiveMinigame.class
+            ).toList();
+        }
+
+        players[startingPlayer.order].requestSelectMinigame(minigames, this::onMinigameChosen);
+    }
+
+
 
     private void onMinigameChosen(Minigame minigame) {
         minigames.remove(minigame);
@@ -107,28 +167,6 @@ public class Game {
         });
 
         return round;
-    }
-
-
-    public void startRound() {
-
-        deal();
-
-        var minigames = this.minigames.stream().toList();
-        // If player hasn't chosen a positive minigame and this is his last minigame, he has to choose one.
-        if (!PlayerHasSelectedPositiveMinigame[startingPlayer.order] && minigames.size() <= NUM_PLAYERS) {
-            minigames = minigames.stream().filter(
-                    minigame -> minigame.getClass() == PositiveMinigame.class
-            ).toList();
-        }
-        // If a player already chose a positive minigame, he can't choose another one.
-        else if (PlayerHasSelectedPositiveMinigame[startingPlayer.order]) {
-            minigames = minigames.stream().filter(
-                    minigame -> minigame.getClass() != PositiveMinigame.class
-            ).toList();
-        }
-
-        players[startingPlayer.order].requestSelectMinigame(minigames, this::onMinigameChosen);
     }
 
     private void endRound() {

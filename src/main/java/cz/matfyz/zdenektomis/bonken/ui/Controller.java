@@ -10,6 +10,10 @@ import javafx.stage.Stage;
 
 import java.util.HashSet;
 
+/**
+ * Controller class for the game.
+ * Bridges game logic with the GUI.
+ */
 public class Controller {
 
     private final StartMenuView startMenuView;
@@ -24,6 +28,10 @@ public class Controller {
     private GuiPlayer guiPlayer;
     private String username;
 
+    /**
+     * Creates a new controller.
+     * @param stage the stage to show the game on
+     */
     public Controller(Stage stage) {
         this.stage = stage;
         this.startMenuView = getStartMenuView();
@@ -35,10 +43,22 @@ public class Controller {
         this.endGameView = getEndGameView(stage);
     }
 
+
+    /**
+     * Starts the game.
+     */
     public void start() {
         stage.setScene(startMenuView.getScene());
         stage.show();
     }
+
+    /**
+     * Closes the game.
+     */
+    public void close() {
+        if (trickPane != null) trickPane.killTimer();
+    }
+
 
     private EndGameView getEndGameView(Stage stage) {
         var view = new EndGameView();
@@ -131,11 +151,8 @@ public class Controller {
         stage.setScene(gameView.getScene());
         trickPane.setGame(game);
         endGameView.setGame(game);
-        game.startRound();
+        game.startGame();
     }
 
-    public void close() {
-        if (trickPane != null) trickPane.killTimer();
-    }
 
 }

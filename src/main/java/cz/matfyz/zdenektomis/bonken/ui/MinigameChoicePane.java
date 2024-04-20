@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Class for showing minigames choices to player.
+ * Class for showing minigame choice to player.
  */
 public class MinigameChoicePane extends FlowPane {
 
@@ -23,6 +23,11 @@ public class MinigameChoicePane extends FlowPane {
 
     private final SimpleEvent<Minigame> onMinigameSelected = new SimpleEvent<>();
 
+    /**
+     * Creates a new minigame choice pane.
+     *
+     * @param minigameList the list of minigames to choose from
+     */
     public MinigameChoicePane(List<Minigame> minigameList) {
         super();
 
@@ -43,10 +48,19 @@ public class MinigameChoicePane extends FlowPane {
         }
     }
 
+    /**
+     * Get event that is fired when user selects a minigame.
+     * @return event that is fired when user selects a minigame
+     */
     public Event<Minigame> onMinigameSelected() {
         return onMinigameSelected;
     }
 
+    /**
+     * Sets the available minigames for the player to choose from.
+     *
+     * @param availableMinigames the available minigames
+     */
     public void setAvailableMinigames(Set<Minigame> availableMinigames) {
 
         for (var minigame : minigameButtons.keySet()) {

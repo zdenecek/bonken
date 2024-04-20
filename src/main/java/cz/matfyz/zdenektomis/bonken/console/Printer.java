@@ -12,13 +12,30 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.groupingBy;
+
+/**
+ * Class for printing game state to console or other stream.
+ */
 public class Printer {
 
+    private Printer() {
+    }
 
+
+    /**
+     * Prints the score board to the console.
+     * @param scoreBoard The score board to print.
+     */
     public static void print(ScoreBoard scoreBoard) {
         print(scoreBoard, System.out);
     }
 
+    /**
+     * Prints the score board to the given stream.
+     * @param scoreBoard The score board to print.
+     * @param out The stream to print to.
+     */
     public static void print(ScoreBoard scoreBoard, PrintStream out) {
 
         String separator = " | ";
@@ -61,19 +78,69 @@ public class Printer {
         out.println(sb);
     }
 
+
+    /**
+     * Prints the hand to the console.
+     * @param cardHand The hand to print.
+     * @param out The stream to print to.
+     */
     static void print(List<Card> cardHand, PrintStream out) {
         out.println(cardHand.stream().map(c -> c.toString()).collect(Collectors.joining(", ")));
     }
 
-    static void print(List<Card> cardHand) {
+    /**
+     * Prints the hand to the console in a short, easily readable format.
+     * @param cardHand The hand to print.
+     */
+    static void printShort(List<Card> cardHand, PrintStream out) {
+
+        out.println( cardHand.stream()
+                .collect(groupingBy(Card::suit))
+                .entrySet()
+                .stream()
+                .map((entry) -> entry.getKey().toPrettyChar() +
+                        entry.getValue().stream()
+                                .map(Card::value)
+                                .sorted()
+                                .toList().reversed().stream()
+                                .map(Card.Value::toChar)
+                                .map(c -> c.toString())
+                                .collect(Collectors.joining(""))
+                ).collect(Collectors.joining(" "))
+        );
+    }
+
+
+    /**
+     * Prints the hand to the console.
+     * @param cardHand The hand to print.
+     */
+    public static void print(List<Card> cardHand) {
         print(cardHand, System.out);
     }
 
-    static void print(Trick trick) {
+    /**
+     * Prints the hand to the console in a short, easily readable format.
+     * @param cardHand The hand to print.
+     */
+    public static void printShort(List<Card> cardHand) {
+        printShort(cardHand, System.out);
+    }
+
+    /**
+     * Prints the trick to the console.
+     * @param trick The game to print.
+     */
+    public static void print(Trick trick) {
         print(trick, System.out);
     }
 
-    static void print(Trick trick, PrintStream out) {
+    /**
+     * Prints the trick to the given stream.
+     * @param trick The trick to print.
+     * @param out The stream to print to.
+     */
+    public static void print(Trick trick, PrintStream out) {
 
         var cards = trick.cards;
         var lengths = cards.stream().mapToInt(c -> c.toString().length()).toArray();

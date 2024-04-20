@@ -23,6 +23,10 @@ public class NameInputView extends View {
     private final BorderPane borderPane;
     private final Button submitButton;
     private final VBox vb;
+
+    /**
+     * Create a new name input view.
+     */
     public NameInputView() {
 
         label1 = new Label("Enter your username:");
@@ -51,6 +55,10 @@ public class NameInputView extends View {
         setScene(new Scene(borderPane, 1080, 720));
     }
 
+    /**
+     * Get event that is fired when user submits the name
+     * @return event that is fired when user submits the name
+     */
     public Event<String> onSubmit() {
         return onSubmit;
     }

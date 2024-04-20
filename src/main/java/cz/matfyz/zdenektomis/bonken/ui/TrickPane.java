@@ -12,25 +12,60 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Logger;
 
+/**
+ * Pane for displaying a trick, four cards in a grid.
+ */
 public class TrickPane extends Pane {
 
     private static final Logger LOGGER = Logger.getLogger(TrickPane.class.getName());
+
+    /**
+     * Border for where the other players place their cards.
+     */
     protected static Border otherPlayerBorder = new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
+    /**
+     * Border for where the player places their cards.
+     */
     protected static Border playerBorder = new Border(new BorderStroke(Color.GOLDENROD, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
+    /**
+     * Width of a card.
+     */
     protected double cardWidth = 132;
+    /**
+     * Height of a card.
+     */
     protected double cardHeight = 180;
+    /**
+     * Timer for hiding the trick animation.
+     */
     protected Timer timer;
+    /**
+     * Panes for the cards where they are to be placed.
+     */
     protected Pane[] cardPanes;
+    /**
+     * The game that the trick pane is showing.
+     */
     protected Game game;
+    /**
+     * Position of the player at the bottom.
+     */
     protected Position bottomPlayer;
+    /**
+     * State variable, whether a trick end animation is being shown.
+     */
     protected boolean showingTrickEnd = false;
+    /**
+     * State variable, whether the trick pane is showing blocking rectangle to disengage clicking.
+     */
     protected boolean blocking = false;
-    boolean trickEndAlreadyDrawn = false;
-    Callable showBlock;
-    Callable hideBlock;
+    private boolean trickEndAlreadyDrawn = false;
+    private Callable showBlock;
+    private Callable hideBlock;
     private final StatusPane statusPane;
 
     /**
+     * Create a new trick pane.
      * @param bottomPlayer position of the player, default is North
      * @param showBlock    called after playing a card
      * @param hideBlock    called when the player is supposed to play
@@ -48,6 +83,9 @@ public class TrickPane extends Pane {
         setupCardPanes();
     }
 
+    /**
+     * Recalculate the positions of the card panes.
+     */
     protected void adjustPanePositions() {
         double h = (this.getHeight() - cardHeight) / 2;
         double w = (this.getWidth() - cardWidth) / 2;
@@ -76,6 +114,7 @@ public class TrickPane extends Pane {
     }
 
     /**
+     * Hide the current trick.
      * Used when ending trick.
      */
     public void packUpTrick() {
@@ -83,18 +122,28 @@ public class TrickPane extends Pane {
         showingTrickEnd = false;
     }
 
+    /**
+     * Clear the trick pane.
+     */
     protected void clear() {
         for (Pane p : cardPanes) {
             p.getChildren().clear();
         }
     }
 
+    /**
+     * Kill the timer for trick hiding.
+     */
     public void killTimer() {
         if (timer != null) {
             timer.cancel();
         }
     }
 
+    /**
+     * Set the game for the trick pane.
+     * @param game the game to set
+     */
     public void setGame(Game game) {
         this.game = game;
         statusPane.setGame(game);
@@ -112,7 +161,7 @@ public class TrickPane extends Pane {
         if (round.tricks.size() != 1 && !trickEndAlreadyDrawn) {
             trickEndAlreadyDrawn = true;
             showingTrickEnd = true;
-            drawTrick(round.lastFinishedTrick());
+            drawTrick(round.getLastFinishedTrick());
             showBlock.call();
 
             timer.schedule(new TimerTask() {

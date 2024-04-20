@@ -26,16 +26,27 @@ public class CardPane extends HBox {
 
     private final SimpleEvent<Card> cardClicked = new SimpleEvent<>();
 
+    /**
+     * Creates a new card pane. Centered.
+     */
     public CardPane() {
         super();
         this.setAlignment(Pos.CENTER);
     }
 
+    /**
+     * Get the event that is fired when user clicks on a card.
+     * @return event that is fired when user clicks on a card
+     */
     public Event<Card> cardClicked() {
         return cardClicked;
     }
 
 
+    /**
+     * Updates CardPane, redraw.
+     * @param cards cards to be displayed
+     */
     public void update(List<Card> cards) {
         this.update(cards, null);
     }
@@ -43,8 +54,8 @@ public class CardPane extends HBox {
     /**
      * Updates CardPane before playing into trick.
      *
-     * @param cards
-     * @param playableCards
+     * @param cards cards to be displayed
+     * @param playableCards cards that can be played
      */
     public void update(List<Card> cards, Set<Card> playableCards) {
 

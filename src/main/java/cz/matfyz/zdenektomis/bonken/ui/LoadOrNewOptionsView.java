@@ -11,7 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
- * Class for choosing between a new game or saved game (vs Bots).
+ * Class for choosing between a new game or saved game.
  */
 public class LoadOrNewOptionsView extends View {
 
@@ -19,6 +19,9 @@ public class LoadOrNewOptionsView extends View {
     private final SimpleEvent<Void> startVsBotsNew = new SimpleEvent<>();
     private final SimpleEvent<Void> startVsBotsLoad = new SimpleEvent<>();
 
+    /**
+     * Creates a new load or new options view.
+     */
     public LoadOrNewOptionsView() {
         BorderPane borderPane = new BorderPane();
 
@@ -54,14 +57,26 @@ public class LoadOrNewOptionsView extends View {
         setScene(scene);
     }
 
+    /**
+     * Get the event that is fired when the start menu button is clicked
+     * @return event that is fired when the start menu button is clicked
+     */
     public Event<Void> showStartMenu() {
         return showStartMenu;
     }
 
+    /**
+     * Get the event that is fired when the new game button is clicked
+     * @return event that is fired when the new game button is clicked
+     */
     public Event<Void> startVsBotsNew() {
         return startVsBotsNew;
     }
 
+    /**
+     * Get the event that is fired when the load game button is clicked
+     * @return event that is fired when the load game button is clicked
+     */
     public Event<Void> startVsBotsLoad() {
         return startVsBotsLoad;
     }

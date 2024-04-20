@@ -6,6 +6,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Represents a deck of cards. Used for dealing hands.
+ */
 public class Deck extends ArrayList<Card> {
     public Deck() {
 
@@ -16,6 +19,10 @@ public class Deck extends ArrayList<Card> {
         ).toList());
     }
 
+    /**
+     * Deals hands to players.
+     * @return List of 4 hands each containing 13 cards.
+     */
     public static List<CardHand> deal() {
 
         var deck = new Deck();
@@ -31,6 +38,9 @@ public class Deck extends ArrayList<Card> {
         return hands;
     }
 
+    /**
+     * Shuffles the deck.
+     */
     public void shuffle() {
         Collections.shuffle(this);
     }

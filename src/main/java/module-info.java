@@ -1,4 +1,8 @@
-module cz.matfyz.zdenektomis.bonken.bonken {
+/**
+ * Module for the Bonken game.
+ */
+module cz.matfyz.zdenektomis.bonken {
+    requires java.base;
     requires javafx.controls;
     requires javafx.fxml;
     requires java.logging;

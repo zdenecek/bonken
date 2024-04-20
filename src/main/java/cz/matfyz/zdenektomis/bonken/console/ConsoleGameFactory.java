@@ -3,9 +3,19 @@ package cz.matfyz.zdenektomis.bonken.console;
 import cz.matfyz.zdenektomis.bonken.model.Game;
 import cz.matfyz.zdenektomis.bonken.model.Player;
 
-public class GameFactory {
+/**
+ * Factory class for creating a game for console UI version.
+ */
+public class ConsoleGameFactory {
 
+    private ConsoleGameFactory() {
+    }
 
+    /**
+     * Creates a game with the given players for console play.
+     * @param players Players to play the game.
+     * @return Game instance.
+     */
     public static Game createGame(Player[] players) {
         Game game = new Game(players);
 

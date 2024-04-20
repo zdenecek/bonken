@@ -7,6 +7,9 @@ import javafx.application.Platform;
 import java.util.ArrayList;
 
 
+/**
+ * Represents a trick in the game of Bonken.
+ */
 public class Trick {
     public final Position firstPlayer;
     public final ArrayList<Card> cards = new ArrayList<>();

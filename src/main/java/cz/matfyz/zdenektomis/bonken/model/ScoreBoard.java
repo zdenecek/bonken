@@ -4,6 +4,9 @@ import cz.matfyz.zdenektomis.bonken.model.minigames.Minigame;
 
 import java.util.Arrays;
 
+/**
+ * Represents the score board of a game of Bonken.
+ */
 public class ScoreBoard {
 
     public final Game game;

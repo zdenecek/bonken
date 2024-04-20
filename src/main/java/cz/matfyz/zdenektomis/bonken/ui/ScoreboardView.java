@@ -7,17 +7,25 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
- * Class for showing scoreboard in offline game.
+ * Class for showing scoreboard in a bot game.
  */
 public class ScoreboardView extends VBox {
     private final Label[] labels = new Label[4];
     private final HBox[] playerBoxes = new HBox[4];
     Game game;
 
+    /**
+     * Creates a new scoreboard view that is not visible.
+     */
     public ScoreboardView() {
         this.setVisible(false);
     }
 
+    /**
+     * Sets the game that the scoreboard is showing.
+     *
+     * @param game The game to set.
+     */
     public void setGame(Game game) {
         this.game = game;
 
@@ -37,6 +45,9 @@ public class ScoreboardView extends VBox {
         this.setSpacing(20);
     }
 
+    /**
+     * Make the scoreboard visible, updating state.
+     */
     public void show() {
         for (int i = 0; i < Game.NUM_PLAYERS; i++) {
             var sums = game.scoreBoard.getSums();
@@ -45,6 +56,9 @@ public class ScoreboardView extends VBox {
         this.setVisible(true);
     }
 
+    /**
+     * Hide the scoreboard.
+     */
     public void hide() {
         this.setVisible(false);
     }

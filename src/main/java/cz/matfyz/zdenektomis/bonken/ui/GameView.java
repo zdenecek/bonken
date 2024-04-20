@@ -23,6 +23,12 @@ public class GameView extends View {
     private final Rectangle blockingRec;
     private final StackPane wholeScreen;
 
+    /**
+     * Create a new game view.
+     * @param minigamePane the minigame choice pane
+     * @param cardPane the card pane
+     * @param trickPane the trick pane
+     */
     public GameView(MinigameChoicePane minigamePane, CardPane cardPane, TrickPane trickPane) {
 
         this.cardPane = cardPane;
@@ -59,15 +65,27 @@ public class GameView extends View {
         setScene(scene);
     }
 
+
+    /**
+     * Set the screen to show or hide the minigame choice.
+     * @param visible whether the minigame choice should be visible
+     */
     public void setMinigameChoiceVisible(boolean visible) {
         minigameChoicePane.setVisible(visible);
         trickPane.setVisible(!visible);
     }
 
+    /**
+     * Show the blocking rectangle to block the user from playing cards.
+     * Used when animations are playing.
+     */
     public void showBlockingRec() {
         blockingRec.toFront();
     }
 
+    /**
+     * Hide the blocking rectangle.
+     */
     public void hideBlockingRec() {
         borderPane.toFront();
     }

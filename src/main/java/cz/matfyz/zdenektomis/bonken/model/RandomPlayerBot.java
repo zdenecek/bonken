@@ -6,6 +6,9 @@ import cz.matfyz.zdenektomis.bonken.utils.Action;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * A bot that makes random choices.
+ */
 public class RandomPlayerBot extends Player {
 
     private final Random random = new Random();

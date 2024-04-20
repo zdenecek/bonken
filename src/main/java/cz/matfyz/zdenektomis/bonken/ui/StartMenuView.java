@@ -10,6 +10,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 
+/**
+ * Class for the start menu of the game.
+ */
 public class StartMenuView extends View {
 
     private final SimpleEvent<Void> onStartClicked = new SimpleEvent<>();
@@ -20,6 +23,9 @@ public class StartMenuView extends View {
     private final VBox menuButtons;
     private final VBox menu;
 
+    /**
+     * Creates a new start menu view.
+     */
     public StartMenuView() {
 
         mainLabel = new Label("BONKEN");
@@ -44,10 +50,19 @@ public class StartMenuView extends View {
         this.setScene(new Scene(menu, 1080, 720));
     }
 
+
+    /**
+     * Get the event that is fired when the start button is clicked
+     * @return event that is fired when the start button is clicked
+     */
     public Event<Void> onStartClicked() {
         return onStartClicked;
     }
 
+    /**
+     * Get the event that is fired when the quit button is clicked
+     * @return event that is fired when the quit button is clicked
+     */
     public Event<Void> onQuitClicked() {
         return onQuitClicked;
     }

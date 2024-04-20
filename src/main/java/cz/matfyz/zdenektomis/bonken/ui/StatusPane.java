@@ -7,7 +7,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
- * Class for showing game status in offline game.
+ * Class for showing game status in a bot game.
  */
 public class StatusPane extends VBox {
 
@@ -22,6 +22,9 @@ public class StatusPane extends VBox {
     private final VBox scoreboardBox;
     private final ScoreboardView scoreboard;
 
+    /**
+     * Creates a new status pane.
+     */
     public StatusPane() {
         super();
 
@@ -47,11 +50,19 @@ public class StatusPane extends VBox {
 
     }
 
+    /**
+     * Sets the game to be displayed.
+     *
+     * @param game the game to set
+     */
     public void setGame(Game game) {
         this.game = game;
         scoreboard.setGame(game);
     }
 
+    /**
+     * Updates the status pane.
+     */
     public void update() {
         int gameCounter = game.rounds.size();
         roundLabel.setText(gameCounter + " / 11");

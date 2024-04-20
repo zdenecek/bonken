@@ -11,24 +11,27 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
- * Class for ending screen in offline game.
+ * Class for ending screen in a bot game.
  */
 public class EndGameView extends View {
 
-    Label gameFinished;
-    VBox vb;
-    VBox[] player = new VBox[Game.NUM_PLAYERS];
-    Label[] playerScore = new Label[Game.NUM_PLAYERS];
-    HBox hbButtons;
-    HBox hbScore;
-    Button returnButton;
-    Button exitButton;
+    private Label gameFinished;
+    private VBox vb;
+    private VBox[] player = new VBox[Game.NUM_PLAYERS];
+    private Label[] playerScore = new Label[Game.NUM_PLAYERS];
+    private HBox hbButtons;
+    private HBox hbScore;
+    private Button returnButton;
+    private Button exitButton;
 
-    Game game;
+    private Game game;
 
     private final SimpleEvent<Void> onShowStartMenuPressed = new SimpleEvent<>();
     private final SimpleEvent<Void> onQuitPressed = new SimpleEvent<>();
 
+    /**
+     * Creates a new end game view.
+     */
     public EndGameView() {
         vb = new VBox();
         hbScore = new HBox();
@@ -52,14 +55,27 @@ public class EndGameView extends View {
 
     }
 
+
+    /**
+     * Get the event that is fired when the menu button is clicked
+     * @return event that is fired when the menu button is clicked
+     */
     public Event<Void> onShowStartMenuPressed() {
         return onShowStartMenuPressed;
     }
 
+    /**
+     * Get the event that is fired when the quit button is clicked
+     * @return event that is fired when the quit button is clicked
+     */
     public Event<Void> onQuitPressed() {
         return onQuitPressed;
     }
 
+    /**
+     * Set the game that has ended.
+     * @param game the game to set
+     */
     public void setGame(Game game) {
         this.game = game;
 
@@ -75,6 +91,9 @@ public class EndGameView extends View {
     }
 
 
+    /**
+     * Show the end game screen.
+     */
     public void show() {
 
         var sums = game.scoreBoard.getSums();

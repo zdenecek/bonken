@@ -10,9 +10,11 @@ import javafx.scene.layout.VBox;
  */
 public class GameStartedView extends View {
 
-
+    /**
+     * Creates a new game started view.
+     */
     public GameStartedView() {
-        Label gameStarted = new Label("ONLINE GAME STARTED");
+        Label gameStarted = new Label("GAME STARTED");
         Label waiting = new Label("Waiting for player to choose a minigame.");
         waiting.getStyleClass().add("small-label");
 

@@ -1,5 +1,8 @@
 package cz.matfyz.zdenektomis.bonken.model;
 
+/**
+ * Represents a position of a player at a table in the game of Bonken.
+ */
 public enum Position {
     NORTH("North"),
     EAST("East"),
