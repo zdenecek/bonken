@@ -64,16 +64,10 @@ public class GameView extends View {
         trickPane.setVisible(!visible);
     }
 
-    /**
-     * Blocks cardPane.
-     */
     public void showBlockingRec() {
         blockingRec.toFront();
     }
 
-    /**
-     * Enables cardPane.
-     */
     public void hideBlockingRec() {
         borderPane.toFront();
     }
